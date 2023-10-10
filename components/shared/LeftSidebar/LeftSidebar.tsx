@@ -10,12 +10,13 @@ import { usePathname } from 'next/navigation';
 const LeftSidebar = () => {
   const pathname = usePathname();
   return (
-    <section className="background-light900_dark200 custom-scrollbar light-border sticky left-0 top-0 flex h-screen  flex-col justify-between overflow-y-auto border-r p-6 pt-36 shadow-light-300 dark:shadow-none max-sm:hidden lg:w-[266px]">
-      <div className="flex flex-1 flex-col gap-8">
+    <section className="background-light900_dark200 light-border custom-scrollbar sticky left-0 top-0 flex h-screen flex-col justify-between overflow-y-auto border-r p-6 pt-36 shadow-light-300 dark:shadow-none max-sm:hidden lg:w-[266px]">
+      <div className="flex flex-1 flex-col gap-6">
         {sidebarLinks.map((link) => {
           const isActive =
-            pathname === link.route ||
-            (pathname.includes(link.route) && link.route.length > 1);
+            (pathname.includes(link.route) && link.route.length > 1) ||
+            pathname === link.route;
+
           return (
             <Link
               key={link.label}
@@ -24,19 +25,19 @@ const LeftSidebar = () => {
                 isActive
                   ? 'primary-gradient rounded-lg text-light-900'
                   : 'text-dark300_light900'
-              } flex-start cursor-pointer gap-4 bg-transparent p-4 `}
+              } flex items-center justify-start gap-4 bg-transparent p-4`}
             >
               <Image
                 src={link.imgURL}
                 alt={link.label}
-                width={24}
-                height={24}
+                width={20}
+                height={20}
                 className={`${isActive ? '' : 'invert-colors'}`}
               />
               <p
                 className={`${
                   isActive ? 'base-bold' : 'base-medium'
-                } max-lg:hidden`}
+                }  max-lg:hidden`}
               >
                 {link.label}
               </p>
@@ -51,8 +52,8 @@ const LeftSidebar = () => {
               <Image
                 src="/assets/icons/account.svg"
                 alt="login"
-                width={24}
-                height={24}
+                width={20}
+                height={20}
                 className="invert-colors lg:hidden"
               />
               <span className="primary-text-gradient max-lg:hidden">
@@ -65,8 +66,8 @@ const LeftSidebar = () => {
               <Image
                 src="/assets/icons/sign-up.svg"
                 alt="sign up"
-                width={24}
-                height={24}
+                width={20}
+                height={20}
                 className="invert-colors lg:hidden"
               />
               <span className=" max-lg:hidden">Sign up</span>
@@ -79,8 +80,8 @@ const LeftSidebar = () => {
           <Image
             src="/assets/icons/arrow-left.svg"
             alt="arrowLeft"
-            width={24}
-            height={24}
+            width={20}
+            height={20}
           />
           <SignOutButton />
         </Button>
