@@ -2,7 +2,7 @@
 
 import { Button } from '@/components/ui/button';
 import { sidebarLinks } from '@/constants';
-import { SignedOut, SignedIn, SignOutButton } from '@clerk/nextjs';
+import { SignedOut } from '@clerk/nextjs';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -75,7 +75,7 @@ const LeftSidebar = () => {
           </Link>
         </div>
       </SignedOut>
-      <SignedIn>
+      {/* <SignedIn>
         <Button className="text-dark300_light900 primary-gradient flex items-center  gap-4 rounded-lg  p-4 ">
           <Image
             src="/assets/icons/arrow-left.svg"
@@ -83,9 +83,11 @@ const LeftSidebar = () => {
             width={20}
             height={20}
           />
-          <SignOutButton />
+          <div className="hidden sm:flex">
+            <SignOutButton />
+          </div>
         </Button>
-      </SignedIn>
+      </SignedIn> */}
     </section>
   );
 };
