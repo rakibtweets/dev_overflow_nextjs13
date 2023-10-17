@@ -21,6 +21,7 @@ import { Input } from '@/components/ui/input';
 import { questionsSchema } from '@/lib/validations';
 import { Badge } from '../ui/badge';
 import Image from 'next/image';
+import { createQuestion } from '@/lib/actions/question.action';
 
 const type: any = 'create';
 
@@ -39,11 +40,12 @@ const Question = () => {
   });
 
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof questionsSchema>) {
+  async function onSubmit(values: z.infer<typeof questionsSchema>) {
     setIsSubmitting(true);
-    console.log(values);
+    // console.log(values);
     try {
       // todo: make async call to our api -> to create a question
+      await createQuestion({});
       // todo: contain all form data
       // todo: navigate to home page
     } catch (error) {
@@ -126,6 +128,8 @@ const Question = () => {
                 {/* //todo: add an editor component */}
                 <Editor
                   apiKey={process.env.NEXT_PUBLIC_TINY_EDITOR_API_KEY}
+                  onBlur={field.onBlur}
+                  onEditorChange={(content) => field.onChange(content)}
                   onInit={(evt, editor) => {
                     // @ts-ignore
                     editorRef.current = editor;
