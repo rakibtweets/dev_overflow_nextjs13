@@ -1,9 +1,5 @@
 import { Schema, models, model, Document } from 'mongoose';
 
-// create mongoose schema for question in typescript
-
-// question interface extends mongoose document
-
 export interface IQuestion extends Document {
   title: string;
   content: string;
