@@ -10,6 +10,8 @@ import {
 } from './shared.types';
 import { revalidatePath } from 'next/cache';
 import Question from '@/database/question.model';
+const mongoose = require('mongoose');
+const ObjectId = mongoose.Types.ObjectId;
 
 export const getUserById = async (params: any) => {
   try {
@@ -44,7 +46,8 @@ export const updateUser = async (params: UpdateUserParams) => {
     connectToDatabase();
 
     const { clerkId, updateData, path } = params;
-    await User.findByIdAndUpdate({ clerkId }, updateData, {
+    const validObjectId = new ObjectId(clerkId);
+    await User.findByIdAndUpdate({ clerkId: validObjectId }, updateData, {
       new: true
     });
 
