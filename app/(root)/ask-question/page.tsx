@@ -1,6 +1,6 @@
 import Question from '@/components/forms/Question';
 import { getUserById } from '@/lib/actions/user.action';
-import { auth } from '@clerk/nextjs';
+// import { auth } from '@clerk/nextjs';
 import { redirect } from 'next/navigation';
 
 const AskQuestion = async () => {
@@ -10,7 +10,6 @@ const AskQuestion = async () => {
 
   const mongoUser = await getUserById({ userId });
 
-  console.log('AskQuestion  mongoUser:', mongoUser);
   return (
     <div>
       <h1 className="h1-bold text-dark100_light900">Ask a question</h1>
