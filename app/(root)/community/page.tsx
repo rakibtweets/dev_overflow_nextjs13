@@ -16,7 +16,7 @@ const Community = async () => {
           route="/community"
           iconPosition="left"
           imgSrc="/assets/icons/search.svg"
-          placeholder="Search for amazing mingds"
+          placeholder="Search for amazing minds"
           otherClasses="flex-1"
         />
 
