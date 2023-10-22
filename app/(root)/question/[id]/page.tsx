@@ -1,14 +1,25 @@
+import Answer from '@/components/forms/Answer';
 import Metric from '@/components/shared/Metric/Metric';
 import ParseHTML from '@/components/shared/ParseHTML/ParseHTML';
+import RenderTag from '@/components/shared/RightSidebar/RenderTag';
 import { getQuestionById } from '@/lib/actions/question.action';
 import { formatAndDivideNumber, getTimeStamp } from '@/lib/utils';
 import Image from 'next/image';
 import Link from 'next/link';
 
-const QuestionDetails = async ({ params, searchParams }) => {
-  console.log('QuestionDetails  params:', params);
+// write interface here
+interface QuestionDetailsProps {
+  params: {
+    id: string;
+  };
+  searchParams: string;
+}
+
+const QuestionDetails = async ({
+  params,
+  searchParams
+}: QuestionDetailsProps) => {
   const { question } = await getQuestionById({ questionId: params.id });
-  console.log('QuestionDetails  question:', question);
   return (
     <>
       <div className="flex-start w-full flex-col ">
@@ -58,7 +69,22 @@ const QuestionDetails = async ({ params, searchParams }) => {
         />
       </div>
 
+      {/* Parsing code to show in Ui */}
       <ParseHTML data={question.content} />
+      {/* Rending Tags */}
+      <div className="mt-8 flex flex-wrap gap-2">
+        {question.tags.map((tag: any) => (
+          <RenderTag
+            key={tag._id}
+            _id={tag._id}
+            name={tag.name}
+            showCount={false}
+          />
+        ))}
+      </div>
+
+      {/* Answer Ai generated Question */}
+      <Answer />
     </>
   );
 };
