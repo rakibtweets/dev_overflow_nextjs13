@@ -38,7 +38,7 @@ const QuestionCard = ({
           <span className="subtle-regular text-dark400_light700 line-clamp-1 flex sm:hidden">
             {getTimeStamp(createdAt)}
           </span>
-          <Link href={`/questions/${_id}`}>
+          <Link href={`/question/${_id}`}>
             <h3 className="sm:h3-semibold base-semibold text-dark200_light900 line-clamp-1 flex-1">
               {title}
             </h3>
@@ -65,7 +65,7 @@ const QuestionCard = ({
           textStyles="body-medium text-dark400_light700"
         />
         <Metric
-          href={`/questions/${_id}`}
+          href={`/question/${_id}`}
           imgUrl="assets/icons/like.svg"
           alt="upvotes"
           value={formatAndDivideNumber(upvotes)}
@@ -73,7 +73,7 @@ const QuestionCard = ({
           textStyles="small-medium text-dark400_light800"
         />
         <Metric
-          href={`/questions/${_id}`}
+          href={`/question/${_id}`}
           imgUrl="assets/icons/message.svg"
           alt="message"
           value={answers.length}
@@ -81,7 +81,7 @@ const QuestionCard = ({
           textStyles="small-medium text-dark400_light800"
         />
         <Metric
-          href={`/questions/${_id}`}
+          href={`/question/${_id}`}
           imgUrl="assets/icons/eye.svg"
           alt="eye"
           value={formatAndDivideNumber(views)}
