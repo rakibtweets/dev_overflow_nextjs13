@@ -1,4 +1,5 @@
 import Answer from '@/components/forms/Answer';
+import AllAnswers from '@/components/shared/AllAnswers/AllAnswers';
 import Metric from '@/components/shared/Metric/Metric';
 import ParseHTML from '@/components/shared/ParseHTML/ParseHTML';
 import RenderTag from '@/components/shared/RightSidebar/RenderTag';
@@ -92,6 +93,13 @@ const QuestionDetails = async ({
           />
         ))}
       </div>
+
+      {/* All Answers */}
+      <AllAnswers
+        questionId={question._id}
+        userId={JSON.stringify(mongoUser._id)}
+        totalAnswers={question.answers.length}
+      />
 
       {/* Answer Ai generated Question */}
       <Answer
