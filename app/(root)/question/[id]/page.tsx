@@ -3,7 +3,9 @@ import Metric from '@/components/shared/Metric/Metric';
 import ParseHTML from '@/components/shared/ParseHTML/ParseHTML';
 import RenderTag from '@/components/shared/RightSidebar/RenderTag';
 import { getQuestionById } from '@/lib/actions/question.action';
+import { getUserById } from '@/lib/actions/user.action';
 import { formatAndDivideNumber, getTimeStamp } from '@/lib/utils';
+import { auth } from '@clerk/nextjs';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -20,6 +22,14 @@ const QuestionDetails = async ({
   searchParams
 }: QuestionDetailsProps) => {
   const { question } = await getQuestionById({ questionId: params.id });
+
+  const { userId: clerkId } = auth();
+
+  let mongoUser;
+  if (clerkId) {
+    mongoUser = await getUserById({ userId: clerkId });
+  }
+
   return (
     <>
       <div className="flex-start w-full flex-col ">
@@ -84,7 +94,11 @@ const QuestionDetails = async ({
       </div>
 
       {/* Answer Ai generated Question */}
-      <Answer />
+      <Answer
+        question={question.content}
+        questionId={JSON.stringify(question._id)}
+        authorId={JSON.stringify(mongoUser._id)}
+      />
     </>
   );
 };
