@@ -5,9 +5,10 @@ import {
   downVoteQuestion,
   upvoteQuestion
 } from '@/lib/actions/question.action';
+import { toggleSaveQuestion } from '@/lib/actions/user.action';
 import { formatAndDivideNumber } from '@/lib/utils';
 import Image from 'next/image';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 
 interface Props {
   type: string;
@@ -31,8 +32,14 @@ const Votes = ({
   hasSaved
 }: Props) => {
   const pathname = usePathname();
-  const rounter = useRouter();
-  const handleSave = () => {};
+  // const rounter = useRouter();
+  const handleSave = async () => {
+    await toggleSaveQuestion({
+      questionId: JSON.parse(itemId),
+      userId: JSON.parse(userId),
+      path: pathname
+    });
+  };
   const handleVote = async (action: string) => {
     if (!userId) {
       return;
