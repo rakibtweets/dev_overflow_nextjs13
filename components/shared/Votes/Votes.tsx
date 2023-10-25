@@ -89,6 +89,7 @@ const Votes = ({
     // todo: show a toast message
   };
 
+  // question view count
   useEffect(() => {
     viewQuestion({
       questionId: JSON.parse(itemId),
