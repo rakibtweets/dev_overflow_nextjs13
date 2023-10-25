@@ -66,7 +66,7 @@ const QuestionCard = ({
         />
         <Metric
           href={`/question/${_id}`}
-          imgUrl="assets/icons/like.svg"
+          imgUrl="/assets/icons/like.svg"
           alt="upvotes"
           value={formatAndDivideNumber(upvotes)}
           title="Votes"
@@ -74,7 +74,7 @@ const QuestionCard = ({
         />
         <Metric
           href={`/question/${_id}`}
-          imgUrl="assets/icons/message.svg"
+          imgUrl="/assets/icons/message.svg"
           alt="message"
           value={answers.length}
           title="Answers"
@@ -82,7 +82,7 @@ const QuestionCard = ({
         />
         <Metric
           href={`/question/${_id}`}
-          imgUrl="assets/icons/eye.svg"
+          imgUrl="/assets/icons/eye.svg"
           alt="eye"
           value={formatAndDivideNumber(views)}
           title="Views"
