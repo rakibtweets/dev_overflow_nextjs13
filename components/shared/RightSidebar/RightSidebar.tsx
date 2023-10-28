@@ -38,7 +38,7 @@ const RightSidebar = () => {
                 {question.title}
               </p>
               <Image
-                src={'assets/icons/chevron-right.svg'}
+                src={'/assets/icons/chevron-right.svg'}
                 alt="chevron right"
                 width={20}
                 height={20}
