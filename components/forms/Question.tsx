@@ -38,16 +38,16 @@ const Question = ({ mongoUserId, type, questionData }: QuestionProps) => {
   const router = useRouter();
   const pathname = usePathname();
 
-  const questionDetails = JSON.parse(questionData || '');
+  const questionDetails = questionData && JSON.parse(questionData || '');
 
-  const groupTags = questionDetails.tags.map((tag: any) => tag.name);
+  const groupTags = questionDetails?.tags.map((tag: any) => tag.name);
 
   // 1. Define your form.
   const form = useForm<z.infer<typeof questionsSchema>>({
     resolver: zodResolver(questionsSchema),
     defaultValues: {
-      title: questionDetails.title || '',
-      explanation: questionDetails.content || '',
+      title: questionDetails?.title || '',
+      explanation: questionDetails?.content || '',
       tags: groupTags || []
     }
   });
@@ -166,7 +166,7 @@ const Question = ({ mongoUserId, type, questionData }: QuestionProps) => {
                     // @ts-ignore
                     editorRef.current = editor;
                   }}
-                  initialValue={questionDetails.content || ''}
+                  initialValue={questionDetails?.content || ''}
                   init={{
                     height: 350,
                     menubar: false,
