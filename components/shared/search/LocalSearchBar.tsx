@@ -39,16 +39,18 @@ const LocalSearchBar = ({
         });
         router.push(newUrl, { scroll: false });
       } else {
-        const newUrl = removeKeysFromQuery({
-          params: searchParams.toString(),
-          keysToRemove: ['q']
-        });
-        router.push(newUrl, { scroll: false });
+        if (pathname === route) {
+          const newUrl = removeKeysFromQuery({
+            params: searchParams.toString(),
+            keysToRemove: ['q']
+          });
+          router.push(newUrl, { scroll: false });
+        }
       }
     }, 300);
 
     return () => clearTimeout(delayDebounceFn);
-  }, [query, search, router, pathname, searchParams]);
+  }, [query, search, route, router, pathname, searchParams]);
 
   return (
     <div
