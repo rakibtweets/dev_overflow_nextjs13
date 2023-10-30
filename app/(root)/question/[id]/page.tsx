@@ -16,7 +16,7 @@ interface QuestionDetailsProps {
   params: {
     id: string;
   };
-  searchParams: string;
+  searchParams: { [key: string]: string | undefined };
 }
 
 const QuestionDetails = async ({
@@ -111,6 +111,8 @@ const QuestionDetails = async ({
         questionId={question._id}
         userId={mongoUser._id}
         totalAnswers={question.answers.length}
+        page={searchParams?.page}
+        filter={searchParams?.filter}
       />
 
       {/* Answer Ai generated Question */}
