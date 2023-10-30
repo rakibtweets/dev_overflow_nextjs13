@@ -7,11 +7,14 @@ import { useState } from 'react';
 import { formUrlQuery } from '@/lib/utils';
 
 const HomeFilters = () => {
-  const [active, setActive] = useState('');
   const searchParams = useSearchParams();
   const router = useRouter();
 
-  const handleClick = (item: string) => {
+  const query = searchParams.get('filter');
+
+  const [active, setActive] = useState(query || '');
+
+  const handleFilterClick = (item: string) => {
     if (active === item) {
       setActive('');
       const newUrl = formUrlQuery({
@@ -41,7 +44,7 @@ const HomeFilters = () => {
               : 'bg-light-800 text-light-500'
           } body-medium rounded-lg px-6 py-3 capitalize shadow-none`}
           key={item.value}
-          onClick={() => handleClick(item.value)}
+          onClickCapture={() => handleFilterClick(item.value)}
         >
           {item.name}
         </Button>
