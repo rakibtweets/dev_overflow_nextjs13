@@ -275,9 +275,16 @@ export const getUserInfo = async (params: GetUserByIdParams) => {
 export const getUserQuestions = async (params: GetUserStatsParams) => {
   try {
     connectToDatabase();
-    const { userId, page = 1, pageSize = 10 } = params;
+    const { userId, page = 1, pageSize = 2 } = params;
+    // pagination
+
+    const skipAmount = (page - 1) * pageSize;
+
     const totalQuestions = await Question.countDocuments({ author: userId });
+
     const userQuestions = await Question.find({ author: userId })
+      .skip(skipAmount)
+      .limit(pageSize)
       .sort({
         views: -1,
         upvotes: -1
@@ -285,7 +292,9 @@ export const getUserQuestions = async (params: GetUserStatsParams) => {
       .populate('tags', '_id name')
       .populate('author', '_id clerkId name picture');
 
-    return { totalQuestions, userQuestions };
+    const isNextQuestion = totalQuestions > skipAmount + userQuestions.length;
+
+    return { totalQuestions, userQuestions, isNextQuestion };
   } catch (error) {
     console.log(error);
     throw error;
@@ -294,16 +303,22 @@ export const getUserQuestions = async (params: GetUserStatsParams) => {
 export const getUserAnswers = async (params: GetUserStatsParams) => {
   try {
     connectToDatabase();
-    const { userId, page = 1, pageSize = 10 } = params;
+    const { userId, page = 1, pageSize = 2 } = params;
+    const skipAmount = (page - 1) * pageSize;
+
     const totalAnswers = await Answer.countDocuments({ author: userId });
     const userAnswers = await Answer.find({ author: userId })
+      .skip(skipAmount)
+      .limit(pageSize)
       .sort({
         upvotes: -1
       })
       .populate('question', '_id title')
       .populate('author', '_id clerkId name picture');
 
-    return { totalAnswers, userAnswers };
+    const isNextAnswer = totalAnswers > skipAmount + userAnswers.length;
+
+    return { totalAnswers, userAnswers, isNextAnswer };
   } catch (error) {
     console.log(error);
     throw error;
