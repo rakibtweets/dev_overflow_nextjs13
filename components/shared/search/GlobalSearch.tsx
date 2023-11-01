@@ -27,7 +27,7 @@ const GlobalSearch = () => {
         !searchContainerRef.current.contains(e.target)
       ) {
         setIsModalOpen(false);
-        setSearch(' ');
+        setSearch('');
       }
     };
 
@@ -53,6 +53,7 @@ const GlobalSearch = () => {
             params: searchParams.toString(),
             keysToRemove: ['global', 'type']
           });
+
           router.push(newUrl, { scroll: false });
         }
       }
