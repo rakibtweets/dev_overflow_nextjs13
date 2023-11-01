@@ -6,25 +6,34 @@ import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 import GlobalFilters from './GlobalFilters';
+import { globalSearch } from '@/lib/actions/general.action';
 
 const GlobarResult = () => {
   const searchParams = useSearchParams();
   const [isLoading, setIsLoading] = useState(false);
+
   const [result, setResult] = useState([
-    { type: 'questions', id: '1', title: 'How to use Next.js ?' },
-    { type: 'tag', id: '2', title: 'What is react ?' },
-    { type: 'questions', id: '3', title: 'How to use Mongodb ?' }
+    { type: 'question', id: 1, title: 'Next.js question' },
+    { type: 'tag', id: 1, title: 'Nextjs' },
+    { type: 'user', id: 1, title: 'jsm' }
   ]);
 
   const global = searchParams.get('global');
   const type = searchParams.get('type');
 
+  // global search useEffect
   useEffect(() => {
     const fetchResult = async () => {
       setResult([]);
       setIsLoading(true);
       try {
         // fetch everything everywhere all at once => globalSearch, filter
+        const res = await globalSearch({
+          query: global,
+          type
+        });
+
+        setResult(JSON.parse(res));
       } catch (error) {
         console.log(error);
         throw error;
@@ -32,10 +41,29 @@ const GlobarResult = () => {
         setIsLoading(false);
       }
     };
+
+    if (global) {
+      fetchResult();
+    }
   }, [global, type]);
 
   const renderLink = (type: string, id: string) => {
-    return '/';
+    switch (type) {
+      case 'question':
+        return `/question/${id}`;
+
+      case 'answer':
+        return `/question/${id}`;
+
+      case 'tag':
+        return `/tags/${id}`;
+
+      case 'user':
+        return `/profile/${id}`;
+
+      default:
+        return '/';
+    }
   };
 
   return (
@@ -61,7 +89,7 @@ const GlobarResult = () => {
             {result.length > 0 ? (
               result.map((item: any, index: number) => (
                 <Link
-                  href={renderLink('type', 'id')}
+                  href={renderLink(item.type, item.id)}
                   key={item.type + item.id + index}
                   className="flex w-full cursor-pointer items-start gap-3 px-5 py-2.5 hover:bg-light-700/50 dark:bg-dark-500/50"
                 >
