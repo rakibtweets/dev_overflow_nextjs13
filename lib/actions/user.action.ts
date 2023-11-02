@@ -221,6 +221,7 @@ export const getSavedQuestions = async (params: GetSavedQuestionsParams) => {
         break;
 
       default:
+        sortOptions = { createdAt: -1 };
         break;
     }
 
@@ -286,6 +287,7 @@ export const getUserQuestions = async (params: GetUserStatsParams) => {
       .skip(skipAmount)
       .limit(pageSize)
       .sort({
+        createdAt: -1,
         views: -1,
         upvotes: -1
       })
@@ -311,6 +313,7 @@ export const getUserAnswers = async (params: GetUserStatsParams) => {
       .skip(skipAmount)
       .limit(pageSize)
       .sort({
+        createdAt: -1,
         upvotes: -1
       })
       .populate('question', '_id title')

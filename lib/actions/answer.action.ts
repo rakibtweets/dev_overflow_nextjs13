@@ -11,6 +11,7 @@ import {
 import Question from '@/database/question.model';
 import { revalidatePath } from 'next/cache';
 import Interaction from '@/database/interaction.model';
+import User from '@/database/user.model';
 
 export const createAnswer = async (params: CreateAnswerParams) => {
   try {
@@ -24,13 +25,24 @@ export const createAnswer = async (params: CreateAnswerParams) => {
     });
 
     // add the answer to the question answers array
-    await Question.findByIdAndUpdate(question, {
+    const questionObject = await Question.findByIdAndUpdate(question, {
       $push: {
         answers: newAnswer._id
       }
     });
 
     // Todo: add interaction
+
+    await Interaction.create({
+      user: author,
+      action: 'answer',
+      question,
+      tags: questionObject.tags,
+      answer: newAnswer._id
+    });
+
+    // todo: increase author's reputation +10 points for answering a question
+    await User.findByIdAndUpdate(author, { $inc: { reputation: 10 } });
 
     revalidatePath(path);
 
@@ -113,7 +125,14 @@ export const upvoteAnswer = async (params: AnswerVoteParams) => {
       throw new Error('No Answer found');
     }
 
-    // Todo: increment author's reputation
+    // Todo: increment author's reputation +2 points for upvoting an answer
+    await User.findByIdAndUpdate(userId, {
+      $inc: { reputation: hasupVoted ? -2 : 2 }
+    });
+
+    await User.findByIdAndUpdate(answer.author, {
+      $inc: { reputation: hasupVoted ? -10 : 10 }
+    });
 
     revalidatePath(path);
 
@@ -149,7 +168,15 @@ export const downVoteAnswer = async (params: AnswerVoteParams) => {
       throw new Error('No answer found');
     }
 
-    // Todo: increment author's reputation
+    // Todo: decrease author's reputation
+
+    await User.findByIdAndUpdate(userId, {
+      $inc: { reputation: hasdownVoted ? -2 : 2 }
+    });
+
+    await User.findByIdAndUpdate(answer.author, {
+      $inc: { reputation: hasdownVoted ? -10 : 10 }
+    });
 
     revalidatePath(path);
 
