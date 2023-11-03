@@ -70,9 +70,6 @@ const Answer = ({ question, questionId, authorId }: Props) => {
         `${process.env.NEXT_PUBLIC_SERVER_URL}/api/chatgpt`,
         {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
           body: JSON.stringify({ question })
         }
       );
