@@ -24,6 +24,7 @@ import Image from 'next/image';
 import { createQuestion, editQuestion } from '@/lib/actions/question.action';
 import { useRouter, usePathname } from 'next/navigation';
 import { useTheme } from '@/context/ThemeProvider';
+import { toast } from '../ui/use-toast';
 
 interface QuestionProps {
   type?: string;
@@ -57,8 +58,7 @@ const Question = ({ mongoUserId, type, questionData }: QuestionProps) => {
     setIsSubmitting(true);
 
     try {
-      // todo: make async call to our api -> to create a question
-
+      // make async call to our api -> to create a question
       if (type === 'Edit') {
         await editQuestion({
           questionId: questionDetails._id,
@@ -66,7 +66,12 @@ const Question = ({ mongoUserId, type, questionData }: QuestionProps) => {
           content: values.explanation,
           path: pathname
         });
+
         router.push(`/question/${questionDetails._id}`);
+        toast({
+          title: `Question Edited `,
+          description: 'Your question has been edited successfully'
+        });
       } else {
         // contain all form data
         await createQuestion({
@@ -76,6 +81,12 @@ const Question = ({ mongoUserId, type, questionData }: QuestionProps) => {
           author: JSON.parse(mongoUserId),
           path: pathname
         });
+
+        toast({
+          title: `Question posted successfully`,
+          description: 'Your question has been added successfully'
+        });
+
         // after question create navigate to home page
         router.push('/');
       }
@@ -258,7 +269,7 @@ const Question = ({ mongoUserId, type, questionData }: QuestionProps) => {
           )}
         />
         <Button
-          className="primary-gradient w-fit !text-light-900"
+          className="primary-gradient mb-5 w-fit !text-light-900"
           type="submit"
           disabled={isSubmitting}
         >

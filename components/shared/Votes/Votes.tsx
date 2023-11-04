@@ -12,7 +12,6 @@ import { formatAndDivideNumber } from '@/lib/utils';
 import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
 import { useEffect } from 'react';
-import { undefined } from 'zod';
 
 interface Props {
   type: string;
@@ -43,6 +42,13 @@ const Votes = ({
       userId: JSON.parse(userId),
       path: pathname
     });
+
+    return toast({
+      title: `Question ${
+        !hasSaved ? 'Saved in' : 'Removed from'
+      } your collection`,
+      variant: !hasSaved ? 'default' : 'destructive'
+    });
   };
   const handleVote = async (action: string) => {
     if (!userId) {
@@ -70,7 +76,7 @@ const Votes = ({
         });
       }
       return toast({
-        title: `Upvoted ${!hasupVoted ? 'Successful' : 'Removed'}}`,
+        title: `Upvoted ${!hasupVoted ? 'Successful' : 'Removed'}`,
         variant: !hasupVoted ? 'default' : 'destructive'
       });
     }

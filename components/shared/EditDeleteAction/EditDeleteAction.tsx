@@ -1,5 +1,6 @@
 'use client';
 
+import { toast } from '@/components/ui/use-toast';
 import { deleteAnswer } from '@/lib/actions/answer.action';
 import { deleteQuestion } from '@/lib/actions/question.action';
 import Image from 'next/image';
@@ -19,9 +20,21 @@ const EditDeleteAction = ({ type, itemId }: Props) => {
     if (type === 'Question') {
       // delete Question
       await deleteQuestion({ questionId: JSON.parse(itemId), path: pathname });
+
+      toast({
+        title: ` Question Deleted `,
+        variant: 'destructive',
+        description: 'Your question has been deleted successfully'
+      });
     } else if (type === 'Answer') {
       // delete Answer
       await deleteAnswer({ answerId: JSON.parse(itemId), path: pathname });
+
+      toast({
+        title: `Answer Deleted `,
+        variant: 'destructive',
+        description: 'Your answer has been deleted successfully'
+      });
     }
   };
   return (

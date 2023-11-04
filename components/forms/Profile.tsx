@@ -18,6 +18,7 @@ import { useState } from 'react';
 import { profileSchema } from '@/lib/validations';
 import { usePathname, useRouter } from 'next/navigation';
 import { updateUser } from '@/lib/actions/user.action';
+import { toast } from '../ui/use-toast';
 
 interface ProfileProps {
   clerkId: string;
@@ -60,8 +61,13 @@ const Profile = ({ clerkId, user }: ProfileProps) => {
         path: pathname
       });
 
-      // back to profile page
+      // back to profile pages
       router.back();
+
+      toast({
+        title: `Profile updated`,
+        description: 'Your profile has been updated successfully'
+      });
     } catch (error) {
       console.log(error);
     } finally {
