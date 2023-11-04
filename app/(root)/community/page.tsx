@@ -15,6 +15,7 @@ const Community = async ({ searchParams }: SearchParamsProps) => {
   });
 
   const pageNumber = searchParams?.page ? +searchParams?.page : 1;
+
   return (
     <>
       <h1 className="h1-bold text-dark100_light900">All Users</h1>
