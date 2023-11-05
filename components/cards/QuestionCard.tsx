@@ -75,30 +75,33 @@ const QuestionCard = ({
           title={`- asked ${getTimeStamp(createdAt)}`}
           textStyles="body-medium text-dark400_light700"
         />
-        <Metric
-          href={`/question/${_id}`}
-          imgUrl="/assets/icons/like.svg"
-          alt="upvotes"
-          value={formatAndDivideNumber(upvotes)}
-          title="Votes"
-          textStyles="small-medium text-dark400_light800"
-        />
-        <Metric
-          href={`/question/${_id}`}
-          imgUrl="/assets/icons/message.svg"
-          alt="message"
-          value={answers.length}
-          title="Answers"
-          textStyles="small-medium text-dark400_light800"
-        />
-        <Metric
-          href={`/question/${_id}`}
-          imgUrl="/assets/icons/eye.svg"
-          alt="eye"
-          value={formatAndDivideNumber(views)}
-          title="Views"
-          textStyles="small-medium text-dark400_light800"
-        />
+
+        <div className="flex items-center gap-3 max-sm:flex-wrap max-sm:justify-start">
+          <Metric
+            href={`/question/${_id}`}
+            imgUrl="/assets/icons/like.svg"
+            alt="upvotes"
+            value={formatAndDivideNumber(upvotes)}
+            title="Votes"
+            textStyles="small-medium text-dark400_light800"
+          />
+          <Metric
+            href={`/question/${_id}`}
+            imgUrl="/assets/icons/message.svg"
+            alt="message"
+            value={answers.length}
+            title="Answers"
+            textStyles="small-medium text-dark400_light800"
+          />
+          <Metric
+            href={`/question/${_id}`}
+            imgUrl="/assets/icons/eye.svg"
+            alt="eye"
+            value={formatAndDivideNumber(views)}
+            title="Views"
+            textStyles="small-medium text-dark400_light800"
+          />
+        </div>
       </div>
     </div>
   );
