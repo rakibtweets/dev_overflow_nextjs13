@@ -11,6 +11,13 @@ import Image from 'next/image';
 import Link from 'next/link';
 import Votes from '../../../../components/shared/Votes/Votes';
 
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Question details | Dev Overflow',
+  description: 'Question page of Dev Overflow'
+};
+
 // write interface here
 interface QuestionDetailsProps {
   params: {

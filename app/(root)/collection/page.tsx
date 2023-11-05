@@ -8,10 +8,17 @@ import { auth } from '@clerk/nextjs';
 import { SearchParamsProps } from '@/types';
 import Pagination from '@/components/shared/Pagination/Pagination';
 
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Collections | Dev Overflow',
+  description: 'Collections page of Dev Overflow'
+};
+
 export default async function Collection({ searchParams }: SearchParamsProps) {
   const { userId } = auth();
   if (!userId) return null;
-  const { questions,isNext } = await getSavedQuestions({
+  const { questions, isNext } = await getSavedQuestions({
     clerkId: userId,
     searchQuery: searchParams?.q,
     filter: searchParams?.filter,

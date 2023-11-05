@@ -7,6 +7,13 @@ import { getAllTags } from '@/lib/actions/tag.action';
 import { SearchParamsProps } from '@/types';
 import Link from 'next/link';
 
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Tags | Dev Overflow',
+  description: 'Quesiton tags page of Dev Overflow'
+};
+
 const Tags = async ({ searchParams }: SearchParamsProps) => {
   const { tags, isNext } = await getAllTags({
     searchQuery: searchParams?.q,
