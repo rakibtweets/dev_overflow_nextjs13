@@ -52,7 +52,7 @@ export const getQuestions = async (params: GetQuestionsParams) => {
 
         break;
       case 'recommended':
-        sortOptions = { answers: -1 };
+        sortOptions = { answers: -1, views: -1 };
         break;
 
       default:
@@ -181,21 +181,19 @@ export const upvoteQuestion = async (params: QuestionVoteParams) => {
       throw new Error('No question found');
     }
 
-    // Todo: increment author's reputation by +1/-1 for upvoting/revoking an upvote to the question
+    // ? increment author's reputation by +1/-1 for upvoting/revoking an upvote to the question
 
     await User.findByIdAndUpdate(userId, {
       $inc: { reputation: hasupVoted ? -1 : 1 }
     });
 
-    // todo: Increment user's reputation by +10/-10 for recieving and upvote/revoking an upvote to the question
+    // ? Increment user's reputation by +10/-10 for recieving and upvote/revoking an upvote to the question
 
     await User.findByIdAndUpdate(question.author, {
       $inc: { reputation: hasupVoted ? -10 : 10 }
     });
 
     revalidatePath(path);
-
-    // get user by id
   } catch (error) {
     console.log(error);
     throw error;
@@ -227,7 +225,7 @@ export const downVoteQuestion = async (params: QuestionVoteParams) => {
       throw new Error('No question found');
     }
 
-    // Todo: decrement author's reputation
+    // ? decrement author's reputation
     await User.findByIdAndUpdate(userId, {
       $inc: { reputation: hasupVoted ? -2 : 2 }
     });
@@ -237,8 +235,6 @@ export const downVoteQuestion = async (params: QuestionVoteParams) => {
     });
 
     revalidatePath(path);
-
-    // get user by id
   } catch (error) {
     console.log(error);
     throw error;
