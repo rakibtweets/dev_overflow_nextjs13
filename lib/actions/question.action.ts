@@ -51,9 +51,11 @@ export const getQuestions = async (params: GetQuestionsParams) => {
         query.answers = { $size: 0 };
 
         break;
+      case 'recommended':
+        sortOptions = { answers: -1 };
+        break;
 
       default:
-        sortOptions = { createdAt: -1 };
         break;
     }
 
