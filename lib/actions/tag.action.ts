@@ -10,6 +10,7 @@ import {
 import Tag, { ITag } from '@/database/tag.model';
 import { FilterQuery } from 'mongoose';
 import Question from '@/database/question.model';
+import Interaction from '@/database/interaction.model';
 
 export const getTopInteractedTags = async (
   params: GetTopInteractedTagsParams
@@ -25,6 +26,15 @@ export const getTopInteractedTags = async (
     }
 
     // todo: Find interactions for the user and group by tags
+    // const userTags = await Interaction.aggregate([
+    //   {
+    //     $match: {
+    //       user: user._id
+    //     }
+    //   },
+    //   { $group: { _id: '$tags' } }
+    // ]);
+    // console.log('userTags:', userTags);
 
     // todo : Interdaction (save to database)
 
