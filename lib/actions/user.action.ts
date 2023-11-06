@@ -302,7 +302,7 @@ export const getUserInfo = async (params: GetUserByIdParams) => {
       }
     ]);
 
-    // ? count question views
+    //  count question views
     const [questionViwes] = await Question.aggregate([
       { $match: { author: user._id } },
 

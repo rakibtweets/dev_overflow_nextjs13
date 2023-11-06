@@ -31,7 +31,7 @@ export const createAnswer = async (params: CreateAnswerParams) => {
       }
     });
 
-    // Todo: add interaction
+    // ? add interaction
 
     await Interaction.create({
       user: author,
@@ -41,7 +41,7 @@ export const createAnswer = async (params: CreateAnswerParams) => {
       answer: newAnswer._id
     });
 
-    // todo: increase author's reputation +10 points for answering a question
+    //  increase author's reputation +10 points for answering a question
     await User.findByIdAndUpdate(author, { $inc: { reputation: 10 } });
 
     revalidatePath(path);
@@ -125,7 +125,7 @@ export const upvoteAnswer = async (params: AnswerVoteParams) => {
       throw new Error('No Answer found');
     }
 
-    // Todo: increment author's reputation +2 points for upvoting an answer
+    //  increment author's reputation +2 points for upvoting an answer
     await User.findByIdAndUpdate(userId, {
       $inc: { reputation: hasupVoted ? -2 : 2 }
     });
@@ -136,7 +136,7 @@ export const upvoteAnswer = async (params: AnswerVoteParams) => {
 
     revalidatePath(path);
 
-    // get user by id
+   
   } catch (error) {
     console.log(error);
     throw error;
@@ -168,7 +168,7 @@ export const downVoteAnswer = async (params: AnswerVoteParams) => {
       throw new Error('No answer found');
     }
 
-    // Todo: decrease author's reputation
+    //  decrease author's reputation
 
     await User.findByIdAndUpdate(userId, {
       $inc: { reputation: hasdownVoted ? -2 : 2 }
@@ -180,7 +180,7 @@ export const downVoteAnswer = async (params: AnswerVoteParams) => {
 
     revalidatePath(path);
 
-    // get user by id
+   
   } catch (error) {
     console.log(error);
     throw error;

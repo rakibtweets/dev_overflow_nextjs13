@@ -48,7 +48,7 @@ export default async function Collection({ searchParams }: SearchParamsProps) {
 
       {/* Card section */}
       <div className="mt-10 flex flex-col gap-6">
-        {/*  //!Todo: looping through questions */}
+        {/*  // ? looping through questions */}
         {questions.length > 0 ? (
           questions?.map((question: any) => (
             <QuestionCard

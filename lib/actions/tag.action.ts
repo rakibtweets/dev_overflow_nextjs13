@@ -84,8 +84,6 @@ export const getAllTags = async (params: GetAllTagsParams) => {
     const isNext = totalTags > skipAmount + tags.length;
 
     return { tags, isNext };
-
-    // get user by id
   } catch (error) {
     console.log(error);
     throw error;
