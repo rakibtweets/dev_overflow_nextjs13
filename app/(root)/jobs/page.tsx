@@ -7,6 +7,7 @@ import {
   fetchLocation
 } from '@/lib/actions/job.action';
 import { Job } from '@/types';
+import { Metadata } from 'next';
 
 interface Props {
   searchParams: {
@@ -16,18 +17,25 @@ interface Props {
   };
 }
 
+export const metadata: Metadata = {
+  title: 'Dev Overflow - Jobs',
+  description:
+    'Find your dream job in the tech industry with Dev Overflow. Explore thousands of job listings tailored to your skills and interests.'
+};
+
 const page = async ({ searchParams }: Props) => {
   const countries = await fetchCountries();
+
   const userLocation = await fetchLocation();
 
   const jobs = await fetchJobs({
     query:
-      `${searchParams?.q}, ${searchParams?.location}` ??
-      `Software Engineer in ${userLocation}`,
+      searchParams?.q || searchParams?.location
+        ? `${searchParams?.q}, ${searchParams?.location}`
+        : `Software Engineer in ${userLocation}`,
     page: searchParams.page ?? 1
   });
-  console.log(jobs);
-  console.log(searchParams.location);
+
   const page = parseInt(searchParams.page ?? 1);
 
   return (
@@ -42,7 +50,7 @@ const page = async ({ searchParams }: Props) => {
         {jobs?.length > 0 ? (
           jobs?.map((job: Job) => {
             if (job.job_title && job.job_title.toLowerCase() !== 'undefined')
-              return <JobCard key={job.id} job={job} />;
+              return <JobCard key={job.job_title} job={job} />;
 
             return null;
           })

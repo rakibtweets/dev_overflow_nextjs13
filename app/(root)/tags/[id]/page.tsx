@@ -4,6 +4,13 @@ import Pagination from '@/components/shared/Pagination/Pagination';
 import LocalSearchBar from '@/components/shared/search/LocalSearchBar';
 import { getQuestionsByTagId } from '@/lib/actions/tag.action';
 import { URLProps } from '@/types';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Tags | Dev Overflow',
+  description:
+    'Explore various tags related to programming and technology on Dev Overflow'
+};
 
 const TagDetails = async ({ params, searchParams }: URLProps) => {
   const { tagTitle, questions, isNext } = await getQuestionsByTagId({
