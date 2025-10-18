@@ -42,6 +42,12 @@ const Answer = ({ question, questionId, authorId }: Props) => {
   const handleCreatAnswer = async (values: z.infer<typeof AnswerSchma>) => {
     setIsSubmitting(true);
     try {
+      if (!authorId) {
+        return toast({
+          title: 'Please login first',
+          description: 'You need to login to perform this action'
+        });
+      }
       await createAnswer({
         content: values.answer,
         author: JSON.parse(authorId),
@@ -69,7 +75,13 @@ const Answer = ({ question, questionId, authorId }: Props) => {
   };
 
   const generateAiAnswer = async () => {
-    if (!authorId) return;
+    if (!authorId) {
+      return toast({
+        title: 'Please login first',
+        description: 'You need to login to perform this action'
+      });
+    }
+
     setIsSubmittingAI(true);
     try {
       const response = await fetch(
@@ -81,6 +93,9 @@ const Answer = ({ question, questionId, authorId }: Props) => {
       );
 
       const aiAnswer = await response.json();
+      if (aiAnswer.error) {
+        throw new Error(aiAnswer.error);
+      }
 
       // convert plaintext to html
       const formatedAnswer = aiAnswer.reply.replace(/\n/g, '<br />');

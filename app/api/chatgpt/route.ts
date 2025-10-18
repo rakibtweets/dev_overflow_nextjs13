@@ -26,6 +26,15 @@ export const POST = async (request: Request) => {
       })
     });
     const responseData = await response.json();
+
+    // 🔹 Check if OpenAI returned an error
+    if (!response.ok) {
+      return NextResponse.json(
+        { error: responseData.error?.message || 'OpenAI API error' },
+        { status: response.status }
+      );
+    }
+
     const reply = responseData.choices[0].message.content;
 
     return NextResponse.json({ reply });

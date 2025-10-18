@@ -37,6 +37,12 @@ const Votes = ({
   const pathname = usePathname();
   const rounter = useRouter();
   const handleSave = async () => {
+    if (!userId) {
+      return toast({
+        title: 'Please login first',
+        description: 'You need to login to perform this action'
+      });
+    }
     await toggleSaveQuestion({
       questionId: JSON.parse(itemId),
       userId: JSON.parse(userId),
